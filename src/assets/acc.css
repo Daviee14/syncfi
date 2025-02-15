@@ -1,0 +1,7 @@
+
+         .acc-body {
+         display: none;
+         }
+         .acc-body.active {
+         display: block;
+         }

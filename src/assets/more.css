@@ -1,0 +1,158 @@
+
+         .overlay {
+         position: fixed;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         width: 100%;
+         height: 100vh;
+         background-color: rgb(0, 0, 0, 0.2);
+         z-index: 99;
+         }
+         .aletr {
+         background-color: #fff;
+         width: 30%;
+         border-radius: 5px;
+         padding: 20px;
+         position: relative;
+         }
+         .close {
+         position: absolute;
+         width: 15px;
+         right: 20px;
+         }
+         .close img {
+         width: 15px !important;
+         cursor: pointer;
+         }
+         .sc-gqPbQI.fhSmUE {
+         cursor: pointer;
+         }
+         .fRcQRh {
+         cursor: pointer;
+         }
+         .aletr h1 {
+         padding-top: 10px;
+         text-align: center;
+         font-size: 2em;
+         }
+         .aletr .select {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         border-radius: 5px;
+         border: 1px solid #ccc;
+         padding: 15px;
+         margin-top: 20px;
+         width: 100%;
+         cursor: pointer;
+         }
+         .aletr img {
+         width: 40px;
+         }
+         .inputBox {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         margin-top: 20px;
+         margin-bottom: 20px;
+         }
+         .inputBox input {
+         width: 80%;
+         border-radius: 5px;
+         border: 1px solid #ccc;
+         outline: none;
+         padding: 10px;
+         color: rgb(88, 112, 135);
+         }
+         .errormessage {
+         color: red;
+         text-align: center;
+         width: 100%;
+         font-size: 16px;
+         display: none;
+         margin-top: 10px;
+         }
+         .inputBox button {
+         width: 80%;
+         border-radius: 5px;
+         border: 1px solid #ccc;
+         outline: none;
+         padding: 10px;
+         margin-top: 25px;
+         color: rgb(88, 112, 135);
+         cursor: pointer;
+         }
+         .inputBox textarea {
+         width: 80%;
+         border-radius: 5px;
+         border: 1px solid #ccc;
+         outline: none;
+         padding: 10px;
+         max-width: 80%;
+         color: rgb(88, 112, 135);
+         }
+         .sss {
+         font-size: 20px;
+         }
+         /* Smartphones (portrait and landscape) ----------- */
+         @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+         /* Styles */
+         .aletr {
+         width: 90%;
+         }
+         }
+         /* Smartphones (landscape) ----------- */
+         @media only screen and (min-width : 321px) {
+         /* Styles */
+         .aletr {
+         width: 80%;
+         }
+         }
+         /* Smartphones (portrait) ----------- */
+         @media only screen and (max-width : 320px) {
+         /* Styles */
+         .aletr {
+         width: 80%;
+         }
+         }
+         /* iPads (portrait and landscape) ----------- */
+         @media only screen and (min-width : 768px) and (max-width : 1024px) {
+         /* Styles */
+         .aletr {
+         width: 50%;
+         }
+         }
+         /* iPads (landscape) ----------- */
+         @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) {
+         /* Styles */
+         .aletr {
+         width: 50%;
+         }
+         }
+         /* iPads (portrait) ----------- */
+         @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {
+         /* Styles */
+         .aletr {
+         width: 60%;
+         }
+         }
+         /* Desktops and laptops ----------- */
+         @media only screen and (min-width : 1224px) {
+         /* Styles */
+         .aletr {
+         width: 40%;
+         }
+         }
+         /* Large screens ----------- */
+         @media only screen and (min-width : 1824px) {
+         /* Styles */
+         .aletr {
+         width: 30%;
+         }
+         }
+         /* iPhone 4 ----------- */
+         @media only screen and (-webkit-min-device-pixel-ratio : 1.5),
+         only screen and (min-device-pixel-ratio : 1.5) {
+         /* Styles */
+         }

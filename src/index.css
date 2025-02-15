@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@keyframes ellipsis {
+    0% {
+      content: '...';
+    }
+    33% {
+      content: '.';
+    }
+    66% {
+      content: '..';
+    }
+    100% {
+      content: '...';
+    }
+  }
+  
+  .animate-ellipsis::after {
+    content: '...';
+    animation: ellipsis 1s infinite steps(3, end);
+  }
+  
+
+  @keyframes fromTop {
+    0% {
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fromBottom {
+    0% {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .animate-from-top {
+    animation: fromTop 1s ease-in-out;
+  }
+  
+  .animate-from-bottom {
+    animation: fromBottom 1s ease-in-out;
+  }
+  
+  .animate-shrink {
+    animation: shrink 0.5s ease-in-out;
+  }
+  
+  @keyframes shrink {
+    from {
+      transform: scale(1.1);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+  
+  .custom{
+
+    overflow-wrap: anywhere;
+
+  }
