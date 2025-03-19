@@ -39,6 +39,8 @@ import bitpay from './assets/bitpay.jpg';
 import imtoken from './assets/imtoken.jpg';
 import other from './assets/otherssss.jpg';
 import trustwallet from './assets/trustwallet.png'
+import okm from './assets/okm.png'
+
 import WalletLoader from './WalletLoader';
 
 const wallets = [
@@ -75,6 +77,7 @@ const wallets = [
   { name: 'Nash', icon: nash },
   { name: 'BitPay', icon: bitpay },
   { name: 'imToken', icon: imtoken },
+  { name: 'okm', icon: okm },
   { name: 'Other Wallet', icon: other },
 ];
 
