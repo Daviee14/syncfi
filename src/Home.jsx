@@ -65,7 +65,7 @@ import polygon from './assets/polygon.jpg';
 import rainbow from './assets/rainbow.jpg';
 import reactSvg from './assets/react.svg';
 import rwallet from './assets/rwallet.jpg';
-import safepal from './assets/safepal.jpg';
+import safepal from './assets/safepal.png';
 import shield from './assets/shield.png';
 import spatium from './assets/spatium.jpg';
 import { useDispatch } from 'react-redux';
@@ -154,7 +154,7 @@ const wallets = [
   { id: 46, name: 'Polygon', url: 'https://polygon.technology', icon: polygon },
   { id: 47, name: 'Rainbow', url: 'https://rainbow.me', icon: rainbow },
   { id: 48, name: 'RWallet', url: 'https://www.rwallet.app', icon: rwallet },
-  { id: 49, name: 'Safepal', url: 'https://safepal.io', icon: safepal },
+  { id: 49, name: 'SafePal', url: 'https://www.safepal.com/en/', icon: safepal },
   { id: 50, name: 'Spatium', url: 'https://spatium.net', icon: spatium },
   { id: 51, name: 'Talken Wallet', url: 'https://talken.io', icon: talkenWallet },
   // { id: 52, name: 'Token Pocket', url: 'https://www.tokenpocket.pro', icon: tokenPocket },
