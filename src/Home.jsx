@@ -175,7 +175,7 @@ const wallets = [
   { id: 65, name: 'TokenPocket', url: 'https://www.tokenpocket.pro', icon: xumm },
   { id: 66, name: 'Zelcore', url: 'https://zelcore.io', icon: zelcore },
   { id: 67, name: 'Phantom', url: 'https://phantom.com/', icon: phantom },
-  { id: 67, name: 'Okx', url: 'https://www.okx.com/', icon: okm },
+  { id: 68, name: 'Okx', url: 'https://www.okx.com/', icon: okm },
 
 ];
 
