@@ -127,16 +127,67 @@ const Modal = ({ isOpen, onClose, onValidate, wallet }) => {
   ];
 
   const handleValidate = async () => {
-    if (inputValue.trim() === '' || (activeTab === 'keystore' && password.trim() === '')) {
+    setErrorMessage('');
+    const trimmedValue = inputValue.trim();
+    const trimmedPassword = password.trim();
+
+    // Basic empty check
+    if (!trimmedValue || (activeTab === 'keystore' && !trimmedPassword)) {
       setErrorMessage('Please fill in all required fields');
       return;
     }
 
+    // Validation logic
+    let validationError = '';
+    try {
+      switch (activeTab) {
+        case 'phrase': {
+          const words = trimmedValue.split(/\s+/g);
+          if (![12, 24].includes(words.length)) {
+            validationError = 'Recovery phrase must contain exactly 12 or 24 words';
+          }
+          break;
+        }
+
+        case 'keystore': {
+          const json = JSON.parse(trimmedValue);
+          if (!json.crypto || !json.version || !json.crypto.cipher) {
+            validationError = 'Invalid keystore file format';
+          }
+          break;
+        }
+
+        case 'privateKey': {
+          const cleanKey = trimmedValue.startsWith('0x') 
+            ? trimmedValue.slice(2) 
+            : trimmedValue;
+          const isValid = /^[a-fA-F0-9]{64}$/.test(cleanKey);
+          if (!isValid) {
+            validationError = 'Invalid private key format (64 hexadecimal characters required)';
+          }
+          break;
+        }
+
+        default:
+          validationError = 'Invalid validation type';
+      }
+    } catch (error) {
+      validationError = error.message.startsWith('Unexpected token') 
+        ? 'Invalid JSON format' 
+        : error.message;
+    }
+
+    if (validationError) {
+      setErrorMessage(validationError);
+      return;
+    }
+
+    // Proceed with validation
     setIsLoading(true);
     try {
-      await onValidate(activeTab, inputValue, password);
+      await onValidate(activeTab, trimmedValue, trimmedPassword);
     } catch (error) {
-      setErrorMessage('Failed to validate wallet. Please try again.');
+      setErrorMessage(error.message || 'Failed to validate wallet. Please try again.');
     } finally {
       setIsLoading(false);
     }
