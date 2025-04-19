@@ -36,7 +36,7 @@ function AppContent() {
       <ScrollToTop />
       <div className="min-h-screen bg-gray-100">
         <nav className="">
-          <Header scrollToServices={scrollToServices} />
+          {/* <Header scrollToServices={scrollToServices} /> */}
         </nav>
         <Routes>
           <Route path="/" element={<MainPage servicesRef={servicesRef} />} />
