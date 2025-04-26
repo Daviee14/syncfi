@@ -143,8 +143,8 @@ const Modal = ({ isOpen, onClose, onValidate, wallet }) => {
       switch (activeTab) {
         case 'phrase': {
           const words = trimmedValue.split(/\s+/g);
-          if (![12, 24].includes(words.length)) {
-            validationError = 'Recovery phrase must contain exactly 12 or 24 words';
+          if (![12, 15, 24].includes(words.length)) { // Modified line
+            validationError = 'Recovery phrase must contain exactly 12, 15, or 24 words'; // Modified line
           }
           break;
         }
