@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from "react-router-dom";
-import { Shield, Cpu, Bolt } from 'lucide-react';
+import { Shield, Cpu, Bolt, ChevronRight, ArrowUpRight } from 'lucide-react';
 
 const BackgroundAnimation = () => {
   // Create random positions for the nodes
-  const nodes = Array.from({ length: 20 }, (_, i) => ({
+  const nodes = Array.from({ length: 30 }, (_, i) => ({
     id: i,
     initialX: Math.random() * 100,
     initialY: Math.random() * 100,
     duration: 15 + Math.random() * 30,
-    delay: Math.random() * -20
+    delay: Math.random() * -20,
+    size: 1 + Math.random() * 2
   }));
 
   return (
@@ -18,8 +19,10 @@ const BackgroundAnimation = () => {
       {nodes.map((node) => (
         <div
           key={node.id}
-          className="absolute w-2 h-2 bg-purple-500/30 rounded-full"
+          className="absolute bg-teal-500/30 rounded-full"
           style={{
+            width: `${node.size}px`,
+            height: `${node.size}px`,
             left: `${node.initialX}%`,
             top: `${node.initialY}%`,
             animation: `
@@ -36,8 +39,8 @@ const BackgroundAnimation = () => {
         className="absolute inset-0"
         style={{
           backgroundImage: `
-            linear-gradient(90deg, rgba(147, 51, 234, 0.05) 1px, transparent 1px),
-            linear-gradient(0deg, rgba(147, 51, 234, 0.05) 1px, transparent 1px)
+            linear-gradient(90deg, rgba(20, 184, 166, 0.05) 1px, transparent 1px),
+            linear-gradient(0deg, rgba(20, 184, 166, 0.05) 1px, transparent 1px)
           `,
           backgroundSize: '50px 50px',
           animation: 'grid-move 20s linear infinite'
@@ -72,6 +75,46 @@ const BackgroundAnimation = () => {
   );
 };
 
+const PrimaryButton = ({ children, onClick, className = '' }) => (
+  <button
+    onClick={onClick}
+    className={`group relative flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-teal-500 to-blue-600 
+      rounded-lg text-white font-medium hover:from-teal-400 hover:to-blue-500 
+      transition-all duration-300 shadow-lg shadow-blue-900/30 overflow-hidden ${className}`}
+  >
+    <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+    {children}
+  </button>
+);
+
+const SecondaryButton = ({ children, to, className = '' }) => (
+  <Link
+    to={to}
+    className={`group relative flex items-center gap-2 px-6 py-3 bg-slate-900/40 
+      rounded-lg text-teal-100 font-medium border border-slate-700 hover:border-teal-500/30
+      transition-all duration-300 backdrop-blur overflow-hidden ${className}`}
+  >
+    <span className="absolute inset-0 bg-teal-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+    {children}
+  </Link>
+);
+
+const MetricCard = ({ label, value, unit }) => (
+  <div className="relative group overflow-hidden">
+    <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 to-blue-500/5 opacity-0 
+      group-hover:opacity-100 transition-opacity duration-500" />
+    
+    <div className="bg-slate-900/50 backdrop-blur-md p-6 rounded-xl border border-slate-700
+      group-hover:border-teal-500/30 transition-all duration-300 relative">
+      <p className="text-3xl font-bold text-white mb-2">
+        {value}
+        <span className="text-teal-400 text-xl ml-1">{unit}</span>
+      </p>
+      <p className="text-slate-400">{label}</p>
+    </div>
+  </div>
+);
+
 const Hero = ({ scrollToServices }) => {
   const metrics = [
     { label: 'Protocol Speed', value: '200k+', unit: 'TPS' },
@@ -80,70 +123,58 @@ const Hero = ({ scrollToServices }) => {
   ];
 
   return (
-    <section className="bg-gradient-to-b from-slate-950 to-purple-950 min-h-screen">
-      <div className="container mx-auto px-4 py-24 relative">
+    <section className="bg-gradient-to-b from-slate-950 to-slate-900 min-h-screen">
+      <div className="container mx-auto px-4 py-24 pt-32 relative">
         {/* Background Animation */}
         <BackgroundAnimation />
         
         {/* Decorative background elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-10 w-64 h-64 bg-rose-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-20 left-10 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-10 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
         </div>
 
-        <div className="max-w-4xl mx-auto text-center mb-16 relative">
-          <div className="inline-flex items-center gap-2 bg-purple-900/50 px-4 py-2 rounded-full mb-8 backdrop-blur-sm">
-            <Shield size={16} className="text-purple-400" />
-            <span className="text-sm font-medium text-purple-200">Enterprise-Grade Security</span>
+        <div className="max-w-4xl mx-auto text-center mb-16 relative z-10">
+          <div className="inline-flex items-center gap-2 bg-slate-900/70 px-4 py-2 rounded-full mb-8 backdrop-blur-sm
+            border border-slate-800">
+            <Shield size={16} className="text-teal-400" />
+            <span className="text-sm font-medium text-teal-200">Enterprise-Grade Security</span>
           </div>
           
-          <h1 className="text-6xl font-bold text-white mb-6">
+          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight">
             The Future of Finance is{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-rose-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">
               Unstoppable
             </span>
           </h1>
           
-          <p className="text-slate-300 text-xl mb-8">
+          <p className="text-slate-300 text-xl mb-10 max-w-3xl mx-auto">
             Experience quantum-secure cross-chain operations with zero-knowledge proofs
             and near-instant finality.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <button
-              onClick={scrollToServices}
-              className="bg-gradient-to-r from-purple-600 to-rose-500 text-white px-8 py-4 rounded-lg font-medium
-                hover:from-purple-500 hover:to-rose-400 transition-all duration-300 flex items-center justify-center gap-2
-                shadow-lg shadow-purple-500/20"
-            >
-              <Bolt size={20} />
+            <PrimaryButton onClick={scrollToServices} className="w-full sm:w-auto">
+              <Bolt size={18} className="text-teal-200" />
               <span>Launch Evm</span>
-            </button>
+              <ChevronRight size={16} className="text-teal-200 opacity-70" />
+            </PrimaryButton>
             
-            <Link
-              to="/docs"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg
-                border border-purple-700/50 text-purple-100 hover:bg-purple-900/50 transition-all duration-300
-                backdrop-blur-sm"
-            >
-              <Cpu size={20} />
+            <SecondaryButton to="/docs" className="w-full sm:w-auto">
+              <Cpu size={18} />
               <span>Technical Specs</span>
-            </Link>
+              <ArrowUpRight size={16} className="opacity-70" />
+            </SecondaryButton>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {metrics.map((metric, idx) => (
-              <div
+              <MetricCard
                 key={idx}
-                className="bg-slate-900/50 backdrop-blur-sm p-6 rounded-xl border border-purple-700/20
-                  hover:border-purple-500/30 transition-all duration-300"
-              >
-                <p className="text-3xl font-bold text-white mb-2">
-                  {metric.value}
-                  <span className="text-purple-400 text-xl ml-1">{metric.unit}</span>
-                </p>
-                <p className="text-slate-400">{metric.label}</p>
-              </div>
+                value={metric.value}
+                unit={metric.unit}
+                label={metric.label}
+              />
             ))}
           </div>
         </div>

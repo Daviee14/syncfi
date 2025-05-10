@@ -59,7 +59,7 @@ const WelcomeModal = () => {
             </div>
             
             <h2 className="text-2xl font-bold mb-3 bg-gradient-to-r from-purple-400 to-rose-400 bg-clip-text text-transparent">
-              Welcome to Synthlayer
+              Welcome to Syncfi
             </h2>
             
             <p className="text-slate-300 mb-6">

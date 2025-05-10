@@ -26,7 +26,6 @@ const InitialLoader = ({ onLoadingComplete }) => {
 
     const interval = setInterval(() => {
       currentProgress += incrementPerStep;
-      
       if (currentProgress >= 100) {
         setProgress(100);
         clearInterval(interval);
@@ -55,12 +54,12 @@ const InitialLoader = ({ onLoadingComplete }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Animated background */}
-      <div className="absolute inset-0 bg-slate-950">
+      <div className="absolute inset-0 bg-gray-900">
         <div className="absolute inset-0 opacity-20">
           {[...Array(20)].map((_, i) => (
             <div
               key={i}
-              className="absolute w-2 h-2 bg-purple-400 rounded-full"
+              className="absolute w-2 h-2 bg-teal-400 rounded-full"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
@@ -73,9 +72,9 @@ const InitialLoader = ({ onLoadingComplete }) => {
 
       <div className="relative w-full max-w-lg mx-4">
         {/* Glowing border */}
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-rose-600 rounded-xl blur opacity-30" />
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-xl blur opacity-30" />
         
-        <div className="relative bg-slate-900/90 backdrop-blur-sm border border-purple-500/20 p-8 rounded-xl">
+        <div className="relative bg-gray-900/90 backdrop-blur-sm border border-teal-500/20 p-8 rounded-xl shadow-xl">
           {/* Rotating icons */}
           <div className="flex justify-center mb-8">
             <div className="relative w-16 h-16">
@@ -88,31 +87,44 @@ const InitialLoader = ({ onLoadingComplete }) => {
                     animationDelay: `${index * -0.5}s`
                   }}
                 >
-                  <Icon className="w-6 h-6 text-purple-400" />
+                  <Icon className="w-6 h-6 text-teal-200" />
                 </div>
               ))}
             </div>
           </div>
 
           <div className="space-y-4">
-            <h2 className="text-xl font-medium text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-rose-400">
+            <h2 className="text-xl font-medium text-center text-transparent bg-clip-text bg-gradient-to-r from-teal-200 to-emerald-300">
               {loadingMessage}
             </h2>
-
+            
             {/* Progress bar */}
-            <div className="relative h-2 bg-slate-800 rounded-full overflow-hidden">
+            <div className="relative h-2 bg-gray-800 rounded-full overflow-hidden">
               <div
-                className="absolute top-0 left-0 h-full bg-gradient-to-r from-purple-600 to-rose-500 transition-all duration-300 rounded-full"
+                className="absolute top-0 left-0 h-full bg-gradient-to-r from-teal-500 to-emerald-400 transition-all duration-300 rounded-full"
                 style={{ width: `${progress}%` }}
               />
-              <div className="absolute top-0 left-0 h-full w-full bg-grid-pattern opacity-20" />
+              
+              {/* Animated glow effect */}
+              <div 
+                className="absolute h-full w-20 bg-white/20" 
+                style={{ 
+                  left: `${progress - 10}%`,
+                  filter: 'blur(8px)',
+                  transition: 'left 0.3s ease-out'
+                }}
+              />
             </div>
-
+            
             {/* Percentage */}
-            <div className="text-center font-medium text-slate-400">
+            <div className="text-center font-medium text-teal-200">
               {Math.round(progress)}%
             </div>
           </div>
+          
+          {/* Additional decorative elements */}
+          <div className="absolute top-0 right-0 w-24 h-24 bg-teal-500/5 rounded-bl-full" />
+          <div className="absolute bottom-0 left-0 w-16 h-16 bg-emerald-500/5 rounded-tr-full" />
         </div>
       </div>
 
@@ -123,13 +135,17 @@ const InitialLoader = ({ onLoadingComplete }) => {
             0%, 100% { opacity: 0.4; }
             50% { opacity: 0.8; }
           }
+          
           ${[...Array(20)].map((_, i) => `
             @keyframes float-${i} {
-              0% { transform: translate(0, 0); }
-              50% { transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px); }
-              100% { transform: translate(0, 0); }
+              0% { transform: translate(0, 0); opacity: 0.3; }
+              25% { opacity: 0.9; }
+              50% { transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px); opacity: 0.5; }
+              75% { opacity: 0.7; }
+              100% { transform: translate(0, 0); opacity: 0.3; }
             }
           `).join('')}
+          
           ${icons.map((_, i) => `
             @keyframes spin-${i} {
               0% { transform: rotate(${i * 60}deg) translateY(-20px) rotate(-${i * 60}deg); }

