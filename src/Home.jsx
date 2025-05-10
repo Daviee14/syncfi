@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Wallet, Search, Shield, ChevronRight, RefreshCw, ExternalLink } from 'lucide-react';
+import { Wallet, Search, Shield, ChevronRight, RefreshCw, ExternalLink, X, Sparkles, Layers, Zap } from 'lucide-react';
 import { setSelectedWallet } from './walletSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 
-import SearchBar from './SearchBar';
-import WalletGrid from './WalletGrid';
-import WalletModal from './WalletModal';
-import Loader from './Loader';
-import ledger from './assets/images.png'
+// Import wallet icons
+import ledger from './assets/images.png';
 import oneInch from './assets/1inch.jpg';
 import arculus from './assets/arculus.jpg';
 import argent from './assets/argent.jpg';
@@ -37,7 +35,6 @@ import enjin from './assets/enjin.jpg';
 import error from './assets/error.png';
 import etoro from './assets/etoro.jpg';
 import exodus from './assets/exodus.jpg';
-
 import flareWallet from './assets/flare_wallet.jpg';
 import gridplus from './assets/gridplus.jpg';
 import guardaWallet from './assets/guarda_wallet.jpg';
@@ -57,7 +54,6 @@ import midasWallet from './assets/midas_wallet.jpg';
 import mykey from './assets/mykey.jpg';
 import nash from './assets/nash.jpg';
 import phantom from './assets/phantom.jpg';
-
 import o3Wallet from './assets/o3_wallet.jpg';
 import onto from './assets/onto.jpg';
 import ownbit from './assets/ownbit.jpg';
@@ -70,9 +66,6 @@ import rwallet from './assets/rwallet.jpg';
 import safepal from './assets/safepal.png';
 import shield from './assets/shield.png';
 import spatium from './assets/spatium.jpg';
-// import { useDispatch } from 'react-redux';
-// import { useNavigate } from 'react-router-dom';
-
 import talkenWallet from './assets/talken_wallet.jpg';
 import tokenPocket from './assets/token_pocket.jpg';
 import tokenary from './assets/tokenary.jpg';
@@ -89,10 +82,6 @@ import unnamed1 from './assets/unnamed(1).png';
 import unnamed2 from './assets/unnamed(2).png';
 import yoroi from './assets/yoroi.png';
 import okm from './assets/okm.png';
-
-
-
-
 import unstoppableWallet from './assets/unstoppable_wallet.jpg';
 import valora from './assets/valora.jpg';
 import viaWallet from './assets/via_wallet.jpg';
@@ -104,36 +93,33 @@ import xumm from './assets/xumm.png';
 import zelcore from './assets/zelcore.jpg';
 import LoaderConnection from './LoaderConnection';
 import InitialLoader from './InitialLoader';
-
-
-
 const wallets = [
-  { id: 1, name: '1inch', url: 'https://1inch.io', icon: oneInch },
+  { id: 1, name: '1inch', url: 'https://1inch.io', icon: oneInch, popular: true },
   { id: 2, name: 'Arculus', url: 'https://getarculus.com', icon: arculus },
-  { id: 3, name: 'Argent', url: 'https://www.argent.xyz', icon: argent },
+  { id: 3, name: 'Argent', url: 'https://www.argent.xyz', icon: argent, popular: true },
   { id: 4, name: 'At Wallet', url: 'https://www.atwallet.io', icon: atWallet },
   { id: 5, name: 'Atoken Wallet', url: 'https://www.atoken.com', icon: atokenWallet },
   { id: 6, name: 'Atomic', url: 'https://atomicwallet.io', icon: atomic },
   { id: 7, name: 'Bifrost', url: 'https://bifrostwallet.com', icon: bifrost },
-  { id: 8, name: 'Binance Wallet', url: 'https://www.binance.com', icon: binance },
+  { id: 8, name: 'Binance Wallet', url: 'https://www.binance.com', icon: binance, popular: true },
   { id: 9, name: 'BitKeep', url: 'https://bitkeep.com', icon: bitkeep },
   { id: 10, name: 'BitPay', url: 'https://bitpay.com', icon: bitpay },
-  { id: 11, name: 'Ledger', url: 'https://www.ledger.com', icon: ledger },
+  { id: 11, name: 'Ledger', url: 'https://www.ledger.com', icon: ledger, popular: true },
   { id: 12, name: 'Bridge Wallet', url: 'https://www.mtpelerin.com/bridge-wallet', icon: bridgeWallet },
   { id: 13, name: 'Celo Wallet', url: 'https://celowallet.app', icon: celoWallet },
   { id: 14, name: 'Coin98', url: 'https://coin98.com', icon: coin98 },
-  { id: 15, name: 'Coinbase', url: 'https://www.coinbase.com', icon: coinbase },
+  { id: 15, name: 'Coinbase', url: 'https://www.coinbase.com', icon: coinbase, popular: true },
   { id: 16, name: 'Coinomi', url: 'https://www.coinomi.com', icon: coinomi },
   { id: 17, name: 'Coinus', url: 'https://coinus.io', icon: coinus },
   { id: 18, name: 'Compound', url: 'https://compound.finance', icon: compound },
   { id: 19, name: 'Cool Wallet S', url: 'https://www.coolwallet.io', icon: coolWalletS },
-  { id: 20, name: 'Crypto.com', url: 'https://crypto.com', icon: crypto },
+  { id: 20, name: 'Crypto.com', url: 'https://crypto.com', icon: crypto, popular: true },
   { id: 21, name: 'Dok Wallet', url: 'https://dokwallet.com', icon: dokWallet },
   { id: 22, name: 'EasyPocket', url: 'https://easypocket.app', icon: easypocket },
   { id: 23, name: 'Ellipal', url: 'https://www.ellipal.com', icon: ellipal },
   { id: 24, name: 'Enjin', url: 'https://enjin.io', icon: enjin },
   { id: 25, name: 'Etoro', url: 'https://www.etoro.com', icon: etoro },
-  { id: 26, name: 'Exodus', url: 'https://www.exodus.com', icon: exodus },
+  { id: 26, name: 'Exodus', url: 'https://www.exodus.com', icon: exodus, popular: true },
   { id: 27, name: 'Flare Wallet', url: 'https://flarewallet.io', icon: flareWallet },
   { id: 28, name: 'Gridplus', url: 'https://gridplus.io', icon: gridplus },
   { id: 29, name: 'Guarda Wallet', url: 'https://guarda.com', icon: guardaWallet },
@@ -146,27 +132,25 @@ const wallets = [
   { id: 36, name: 'Kyberswap', url: 'https://kyberswap.com', icon: kyberswap },
   { id: 37, name: 'Ledger Live', url: 'https://www.ledger.com/ledger-live', icon: ledgerLive },
   { id: 38, name: 'Math Wallet', url: 'https://mathwallet.org', icon: mathWallet },
-  { id: 39, name: 'Metamask', url: 'https://metamask.io', icon: metamask },
+  { id: 39, name: 'Metamask', url: 'https://metamask.io', icon: metamask, popular: true },
   { id: 40, name: 'MyKey', url: 'https://mykey.org', icon: mykey },
   { id: 41, name: 'O3 Wallet', url: 'https://o3.network', icon: o3Wallet },
   { id: 42, name: 'Onto', url: 'https://onto.app', icon: onto },
   { id: 43, name: 'Ownbit', url: 'https://ownbit.io', icon: ownbit },
   { id: 44, name: 'Plasmapay', url: 'https://plasmapay.com', icon: plasmapay },
   { id: 45, name: 'Polkadot', url: 'https://polkadot.network', icon: polkadot },
-  { id: 46, name: 'Polygon', url: 'https://polygon.technology', icon: polygon },
-  { id: 47, name: 'Rainbow', url: 'https://rainbow.me', icon: rainbow },
+  { id: 46, name: 'Polygon', url: 'https://polygon.technology', icon: polygon, popular: true },
+  { id: 47, name: 'Rainbow', url: 'https://rainbow.me', icon: rainbow, popular: true },
   { id: 48, name: 'RWallet', url: 'https://www.rwallet.app', icon: rwallet },
   { id: 49, name: 'SafePal', url: 'https://www.safepal.com/en/', icon: safepal },
   { id: 50, name: 'Spatium', url: 'https://spatium.net', icon: spatium },
   { id: 51, name: 'Talken Wallet', url: 'https://talken.io', icon: talkenWallet },
-  // { id: 52, name: 'Token Pocket', url: 'https://www.tokenpocket.pro', icon: tokenPocket },
+  { id: 52, name: 'Yoroi', url:'https://yoroi-wallet.com/', icon: yoroi },
   { id: 53, name: 'Tokenary', url: 'https://tokenary.io', icon: tokenary },
-  {id: 52, name: 'Yoroi', url:'https://yoroi-wallet.com/', icon: yoroi },
-
   { id: 54, name: 'Torus', url: 'https://tor.us', icon: torus },
   { id: 55, name: 'Tradestation', url: 'https://www.tradestation.com', icon: tradestation },
-  { id: 56, name: 'Trezor', url: 'https://trezor.io', icon: trezor },
-  { id: 57, name: 'Trust Wallet', url: 'https://trustwallet.com', icon: trustWallet },
+  { id: 56, name: 'Trezor', url: 'https://trezor.io', icon: trezor, popular: true },
+  { id: 57, name: 'Trust Wallet', url: 'https://trustwallet.com', icon: trustWallet, popular: true },
   { id: 58, name: 'Trustee Wallet', url: 'https://trusteeglobal.com', icon: trusteeWallet },
   { id: 59, name: 'Unstoppable Wallet', url: 'https://unstoppable.money', icon: unstoppableWallet },
   { id: 60, name: 'Valora', url: 'https://valoraapp.com', icon: valora },
@@ -176,11 +160,9 @@ const wallets = [
   { id: 64, name: 'Xinfin', url: 'https://xinfin.org', icon: xinfin },
   { id: 65, name: 'TokenPocket', url: 'https://www.tokenpocket.pro', icon: xumm },
   { id: 66, name: 'Zelcore', url: 'https://zelcore.io', icon: zelcore },
-  { id: 67, name: 'Phantom', url: 'https://phantom.com/', icon: phantom },
-  { id: 68, name: 'Okx', url: 'https://www.okx.com/', icon: okm },
-
+  { id: 67, name: 'Phantom', url: 'https://phantom.com/', icon: phantom, popular: true },
+  { id: 68, name: 'Okx', url: 'https://www.okx.com/', icon: okm, popular: true },
 ];
-
 
 function Home() {
   const dispatch = useDispatch();
@@ -191,14 +173,42 @@ function Home() {
   const [initialLoading, setInitialLoading] = useState(true);
   const [showConnectionLoader, setShowConnectionLoader] = useState(false);
   const [selectedWalletForModal, setSelectedWalletForModal] = useState(null);
+  const [activeTab, setActiveTab] = useState('all'); // 'all', 'popular', 'recently'
+  const [recentWallets, setRecentWallets] = useState([15, 39, 57]); // IDs of recently used wallets
+  const [animateBackground, setAnimateBackground] = useState(false);
 
-  const filteredWallets = wallets.filter(wallet =>
-    wallet.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  useEffect(() => {
+    // Initial loading animation
+    const timer = setTimeout(() => {
+      setInitialLoading(false);
+    }, 2500);
+
+    // Start the subtle background animation after component mounts
+    setTimeout(() => {
+      setAnimateBackground(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const filteredWallets = wallets.filter(wallet => {
+    const matchesSearch = wallet.name.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    if (activeTab === 'all') return matchesSearch;
+    if (activeTab === 'popular') return matchesSearch && wallet.popular;
+    if (activeTab === 'recently') return matchesSearch && recentWallets.includes(wallet.id);
+    
+    return matchesSearch;
+  });
 
   const handleCardClick = (wallet) => {
     // Store the selected wallet for the modal
     setSelectedWalletForModal(wallet);
+    
+    // Add to recent wallets (if not already in the list)
+    if (!recentWallets.includes(wallet.id)) {
+      setRecentWallets(prev => [wallet.id, ...prev.slice(0, 4)]); // Keep only 5 most recent
+    }
     
     // Dispatch to Redux
     dispatch(setSelectedWallet({ 
@@ -214,7 +224,7 @@ function Home() {
     setTimeout(() => {
       setShowConnectionLoader(false);
       setShowModal(true);
-    }, 5000);
+    }, 4000);
   };
 
   const handleCloseModal = () => {
@@ -232,48 +242,114 @@ function Home() {
     setTimeout(() => {
       setShowConnectionLoader(false);
       setShowModal(true);
-    }, 5000);
+    }, 4000);
   };
 
-  // Custom SearchBar component with teal styling
+  // Custom SearchBar component with modern styling and animations
   const CustomSearchBar = ({ searchTerm, setSearchTerm }) => {
     return (
-      <div className="relative max-w-xl mx-auto mb-12">
-        <div className="flex items-center bg-gray-800/60 border border-teal-500/30 rounded-xl overflow-hidden backdrop-blur-sm">
-          <div className="pl-4">
-            <Search size={20} className="text-teal-200" />
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+        className="relative max-w-xl mx-auto mb-8"
+      >
+        <div className="flex items-center bg-gray-900/60 border border-indigo-500/20 rounded-2xl overflow-hidden backdrop-blur-lg shadow-lg shadow-indigo-500/5">
+          <div className="pl-5">
+            <Search size={20} className="text-indigo-300" />
           </div>
-          <input
+          <motion.input
+            whileFocus={{ boxShadow: "0 0 0 2px rgba(129, 140, 248, 0.2)" }}
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search wallets..."
-            className="w-full py-4 px-3 bg-transparent text-white placeholder-teal-200/50 outline-none"
+            className="w-full py-5 px-4 bg-transparent text-white placeholder-indigo-300/50 outline-none transition-all duration-300"
           />
           {searchTerm && (
-            <button
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
               onClick={() => setSearchTerm('')}
-              className="px-4 text-teal-200 hover:text-teal-100"
+              className="px-5 text-indigo-300 hover:text-indigo-100 transition-colors duration-300"
             >
-              ✕
-            </button>
+              <X size={18} />
+            </motion.button>
           )}
         </div>
-      </div>
+      </motion.div>
     );
   };
 
-  // Custom WalletGrid component with teal styling
+  // Tabs for filtering wallets
+  const WalletTabs = () => {
+    return (
+      <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
+        className="flex justify-center mb-8 gap-2"
+      >
+        {[
+          { id: 'all', label: 'All Wallets', icon: Layers },
+          { id: 'popular', label: 'Popular', icon: Sparkles },
+          { id: 'recently', label: 'Recently Used', icon: Zap }
+        ].map(tab => (
+          <motion.button
+            key={tab.id}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => setActiveTab(tab.id)}
+            className={`flex items-center gap-2 px-6 py-3 rounded-xl border font-medium transition-all duration-300 ${
+              activeTab === tab.id 
+                ? 'bg-indigo-600 text-white border-indigo-500 shadow-lg shadow-indigo-500/20' 
+                : 'bg-gray-800/40 text-gray-300 border-gray-700/50 hover:bg-gray-700/50'
+            }`}
+          >
+            <tab.icon size={16} className={activeTab === tab.id ? 'text-indigo-200' : 'text-gray-400'} />
+            {tab.label}
+          </motion.button>
+        ))}
+      </motion.div>
+    );
+  };
+
+  // Custom WalletGrid component with modern styling and animations
   const CustomWalletGrid = ({ wallets, onCardClick }) => {
     return (
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {wallets.map((wallet) => (
-          <div
+      <div className="relative grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        {wallets.map((wallet, index) => (
+          <motion.div
             key={wallet.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 * (index % 5) }}
+            whileHover={{ 
+              y: -5, 
+              transition: { duration: 0.2 }
+            }}
             onClick={() => onCardClick(wallet)}
-            className="bg-gray-800/40 border border-teal-500/20 rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 hover:bg-gray-700/40 hover:border-teal-400/30 hover:shadow-lg hover:shadow-teal-500/10 group"
+            className="relative bg-gray-900/40 border border-indigo-500/20 rounded-2xl p-5 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 hover:bg-gray-800/60 hover:border-indigo-400/30 hover:shadow-xl hover:shadow-indigo-500/10 overflow-hidden group"
           >
-            <div className="w-12 h-12 mb-3 rounded-full bg-gray-700 p-1 overflow-hidden flex items-center justify-center">
+            {/* Animated gradient background on hover */}
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/5 via-purple-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            
+            {/* Popular badge */}
+            {wallet.popular && (
+              <div className="absolute top-2 right-2">
+                <div className="flex items-center px-2 py-1 bg-indigo-500/20 rounded-full">
+                  <Sparkles size={10} className="text-indigo-300 mr-1" />
+                  <span className="text-xs text-indigo-300 font-medium">Popular</span>
+                </div>
+              </div>
+            )}
+
+            <motion.div 
+              whileHover={{ scale: 1.15 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              className="w-16 h-16 mb-3 rounded-full bg-gray-800 p-1 overflow-hidden flex items-center justify-center shadow-lg shadow-indigo-500/10 border border-indigo-500/20"
+            >
               <img
                 src={wallet.icon}
                 alt={wallet.name}
@@ -283,78 +359,130 @@ function Home() {
                   e.target.src = "fallback-image-url.jpg";
                 }}
               />
-            </div>
-            <h3 className="text-white font-medium text-sm text-center">{wallet.name}</h3>
-            <div className="mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <span className="text-xs text-teal-200 flex items-center gap-1">
+            </motion.div>
+            <h3 className="text-white font-medium text-base text-center mb-1">{wallet.name}</h3>
+            <div className="mt-2 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center gap-1">
+              <motion.span 
+                initial={{ width: 0 }}
+                whileHover={{ width: "auto" }}
+                className="overflow-hidden text-xs text-indigo-300 py-1 px-3 bg-indigo-500/20 rounded-full flex items-center gap-1 whitespace-nowrap"
+              >
                 Connect <ChevronRight size={12} />
-              </span>
+              </motion.span>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     );
   };
 
-  // Custom WalletModal component with teal styling
+  // Custom WalletModal component with modern styling and animations
   const CustomWalletModal = ({ wallet, onClose, onTryAgain, onManualConnect }) => {
     return (
-      <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/80 backdrop-blur-sm">
-      <div className="bg-gray-900 border border-teal-500/30 rounded-2xl w-full max-w-md overflow-hidden shadow-2xl">
-        <div className="p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-xl font-bold text-white">Connection Failed</h3>
-            <button onClick={onClose} className="text-teal-200 hover:text-teal-100">
-              ✕
-            </button>
-          </div>
-          
-          <div className="flex flex-col items-center justify-center py-6">
-            <div className="w-16 h-16 rounded-full bg-gray-800 p-2 mb-4">
-              <img 
-                src={wallet.icon} 
-                alt={wallet.name} 
-                className="w-full h-full object-contain rounded-full"
-              />
+      <AnimatePresence>
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 flex items-center justify-center z-50 bg-black/90 backdrop-blur-lg"
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="bg-gray-900/80 border border-indigo-500/30 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl backdrop-blur-xl"
+          >
+            <div className="p-8">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-2xl font-bold text-white bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">Connection Failed</h3>
+                <motion.button 
+                  whileHover={{ scale: 1.1, rotate: 90 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={onClose} 
+                  className="text-indigo-300 hover:text-indigo-100 bg-gray-800/50 p-2 rounded-full"
+                >
+                  <X size={18} />
+                </motion.button>
+              </div>
+              
+              <div className="flex flex-col items-center justify-center py-6">
+                <motion.div 
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ type: "spring", damping: 12, stiffness: 200, delay: 0.1 }}
+                  className="w-20 h-20 rounded-full bg-gray-800/70 p-2 mb-5 border border-indigo-500/30 shadow-lg shadow-indigo-500/20"
+                >
+                  <img 
+                    src={wallet.icon} 
+                    alt={wallet.name} 
+                    className="w-full h-full object-contain rounded-full"
+                  />
+                </motion.div>
+                <motion.p 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="text-2xl font-medium text-white mb-1"
+                >
+                  {wallet.name}
+                </motion.p>
+                <motion.a 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  href={wallet.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-sm text-indigo-300 flex items-center gap-1 mb-6 hover:text-indigo-100 transition-colors"
+                >
+                  {wallet.url.replace('https://', '')} <ExternalLink size={12} />
+                </motion.a>
+                
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="bg-gray-800/60 border border-indigo-500/20 rounded-xl p-5 mb-6 text-gray-300 text-sm"
+                >
+                  <p>We couldn't connect to your wallet automatically. Please try again or connect manually using your wallet extension.</p>
+                </motion.div>
+              </div>
+              
+              <div className="flex flex-col gap-3">
+              <motion.button 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={onTryAgain} 
+                  className="group relative w-full py-4 bg-gradient-to-br from-teal-500 to-blue-600 rounded-xl text-white font-medium hover:from-teal-400 hover:to-blue-500 transition-all duration-300 shadow-lg shadow-blue-900/30 overflow-hidden flex items-center justify-center gap-2"
+                >
+                  <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <RefreshCw size={18} className="text-teal-200" /> Try Again
+                </motion.button>
+                <motion.button 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={onManualConnect} 
+                  className="group relative w-full py-4 bg-gray-800 border border-indigo-500/30 rounded-xl text-white font-medium hover:bg-gray-700 transition-all duration-300 shadow-lg shadow-indigo-900/10 overflow-hidden flex items-center justify-center gap-2"
+                >
+                  <span className="absolute inset-0 bg-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  Connect Manually
+                </motion.button>
+              </div>
             </div>
-            <p className="text-lg font-medium text-white mb-1">{wallet.name}</p>
-            <a 
-              href={wallet.url} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="text-sm text-teal-200 flex items-center gap-1 mb-6 hover:text-teal-100"
-            >
-              {wallet.url.replace('https://', '')} <ExternalLink size={12} />
-            </a>
-            
-            <div className="bg-gray-800/60 rounded-lg p-4 mb-6 text-gray-300 text-sm">
-              <p>We couldn't connect to your wallet automatically. Please try again or connect manually using your wallet extension.</p>
-            </div>
-          </div>
-          
-          <div className="flex flex-col gap-3">
-            <button 
-              onClick={onTryAgain} 
-              className="group relative w-full py-3 bg-gradient-to-br from-teal-500 to-blue-600 rounded-lg text-white font-medium hover:from-teal-400 hover:to-blue-500 transition-all duration-300 shadow-lg shadow-blue-900/30 overflow-hidden flex items-center justify-center gap-2"
-            >
-              <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <RefreshCw size={16} /> Try Again
-            </button>
-            <button 
-              onClick={onManualConnect} 
-              className="group relative w-full py-3 bg-gradient-to-br from-teal-500 to-blue-600 rounded-lg text-white font-medium hover:from-teal-400 hover:to-blue-500 transition-all duration-300 shadow-lg shadow-blue-900/30 overflow-hidden flex items-center justify-center gap-2"
-            >
-              <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              Connect Manually
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+          </motion.div>
+        </motion.div>
+      </AnimatePresence>
     );
   };
 
-  // Custom LoaderConnection component with teal styling
+  // Custom LoaderConnection component with modern styling and animations
   const CustomLoaderConnection = () => {
     return (
       <div className="fixed inset-0 flex flex-col items-center justify-center z-50 bg-black/80 backdrop-blur-sm">

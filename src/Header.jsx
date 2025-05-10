@@ -111,7 +111,7 @@ const Header = ({ scrollToServices }) => {
                 </div>
                 <span className="text-xl font-bold bg-clip-text text-transparent 
                   bg-gradient-to-r from-teal-400 to-blue-400 tracking-tight">
-                  syncfi
+                  SyncFi
                 </span>
               </div>
             </Link>

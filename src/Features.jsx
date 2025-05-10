@@ -142,7 +142,7 @@ const FeatureCard = ({ icon: Icon, title, description }) => {
         <p className="text-slate-400 mb-6 text-sm leading-relaxed flex-grow">
           {description}
         </p>
-        <Link to="/details" className="mt-auto">
+        <a href={`mailto:support@syncfi.com?subject=Learn More About ${title}`} className="mt-auto">
           <button
             className="w-full bg-slate-800/80 border border-slate-700 text-white px-6 py-3 rounded-lg
               hover:bg-teal-900/20 hover:border-teal-500/30 transition-all duration-300
@@ -153,7 +153,7 @@ const FeatureCard = ({ icon: Icon, title, description }) => {
             <span className="relative">Learn More</span>
             <ArrowRight className="w-4 h-4 text-teal-400 transform group-hover:translate-x-1 transition-transform duration-300" />
           </button>
-        </Link>
+        </a>
       </div>
     </div>
   );
@@ -239,19 +239,19 @@ const Features = () => {
             <div className="absolute left-0 top-0 w-64 h-64 bg-blue-500/10 rounded-full blur-xl"></div>
             <div className="relative flex flex-col md:flex-row items-center justify-between gap-8">
               <div>
-                <h3 className="text-2xl font-bold text-white mb-3">Security Assessment</h3>
+                <h3 className="text-2xl font-bold text-white mb-3">Enterprise Security Assessment</h3>
                 <p className="text-slate-300 max-w-xl">
-                  Schedule a comprehensive security audit and receive a custom implementation plan for your organization
+                  Fortify your blockchain infrastructure with our quantum-resistant security audit. Our experts analyze vulnerabilities, optimize protocol integrations, and deliver a customized implementation roadmap for institutional-grade protection.
                 </p>
               </div>
-              <Link to="/security-assessment">
+              <a href="mailto:support@syncfi.com?subject=Security Assessment Inquiry">
                 <button className="whitespace-nowrap flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-teal-500 to-blue-600
                   rounded-lg text-white font-medium hover:from-teal-400 hover:to-blue-500
                   transition-all duration-300 shadow-lg shadow-blue-900/30">
-                  Request Audit
+                  Contact Support
                   <ExternalLink size={16} />
                 </button>
-              </Link>
+              </a>
             </div>
           </div>
 
@@ -260,41 +260,37 @@ const Features = () => {
               <BlockchainAnimation />
             </div>
             
-            <div className="w-full lg:w-1/2">
-              <div className="inline-flex items-center gap-2 bg-slate-900/70 px-4 py-2 rounded-full mb-4
-                backdrop-blur-sm border border-slate-800">
-                <Boxes size={16} className="text-blue-400" />
-                <span className="text-sm font-medium text-blue-200">Active Protection</span>
-              </div>
-              
-              <h2 className="text-3xl font-bold text-white mb-6">
-                Next-Generation Defense System
-              </h2>
-              
-              <p className="text-slate-300 mb-8 leading-relaxed">
-                Our distributed security architecture provides round-the-clock protection against advanced threats including quantum computing attacks, 51% attacks, and smart contract vulnerabilities.
-              </p>
-              
-              <div className="space-y-4 mb-8">
-                {features.slice(0, 3).map((feature, idx) => (
-                  <div key={idx} className="flex items-start gap-3">
-                    <div className="bg-teal-500/10 rounded-full p-1">
-                      <feature.icon size={16} className="text-teal-400" />
-                    </div>
-                    <span className="text-slate-300 text-sm">{feature.description}</span>
-                  </div>
-                ))}
-              </div>
-              
-              <Link to="/technology">
-                <button className="flex items-center gap-2 px-6 py-3 bg-slate-800/80 border border-slate-700
-                  rounded-lg text-white hover:bg-teal-900/20 hover:border-teal-500/30
-                  transition-all duration-300 group">
-                  <span>Explore Our Technology</span>
-                  <ArrowRight className="w-4 h-4 text-teal-400 transform group-hover:translate-x-1 transition-transform duration-300" />
-                </button>
-              </Link>
-            </div>
+           <div className="w-full lg:w-1/2">
+  <div className="inline-flex items-center gap-2 bg-slate-900/70 px-4 py-2 rounded-full mb-4
+    backdrop-blur-sm border border-slate-800">
+    <Boxes size={16} className="text-blue-400" />
+    <span className="text-sm font-medium text-blue-200">DeFi Protocol</span>
+  </div>
+  <h2 className="text-3xl font-bold text-white mb-6">
+    Enterprise-Grade Liquidity Solutions
+  </h2>
+  <p className="text-slate-300 mb-8 leading-relaxed">
+    Our cross-chain liquidity infrastructure enables seamless asset transfers with minimal slippage across multiple blockchains, optimized for institutional trading volumes and capital efficiency.
+  </p>
+  <div className="space-y-4 mb-8">
+    {features.slice(0, 3).map((feature, idx) => (
+      <div key={idx} className="flex items-start gap-3">
+        <div className="bg-teal-500/10 rounded-full p-1">
+          <feature.icon size={16} className="text-teal-400" />
+        </div>
+        <span className="text-slate-300 text-sm">{feature.description}</span>
+      </div>
+    ))}
+  </div>
+  <Link to="/connect" href="mailto:support@syncfi.com?subject=Liquidity Solution Inquiry">
+    <button className="flex items-center gap-2 px-6 py-3 bg-slate-800/80 border border-slate-700
+      rounded-lg text-white hover:bg-teal-900/20 hover:border-teal-500/30
+      transition-all duration-300 group">
+      <span>Explore Liquidity Solutions</span>
+      <ArrowRight className="w-4 h-4 text-teal-400 transform group-hover:translate-x-1 transition-transform duration-300" />
+    </button>
+  </Link>
+</div>
           </div>
         </div>
       </div>

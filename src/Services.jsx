@@ -162,17 +162,17 @@ const Services = () => {
             
             <div className="relative flex flex-col md:flex-row items-center justify-between gap-8">
               <div>
-                <h3 className="text-2xl font-bold text-white mb-3">Enterprise Solutions</h3>
-                <p className="text-slate-300 max-w-xl">
-                  Custom blockchain solutions, dedicated support, and enhanced security for enterprise clients
-                </p>
+              <h3 className="text-2xl font-bold text-white mb-3">Next-Gen Blockchain for Institutions</h3>
+              <p className="text-slate-300 max-w-xl">
+  Quantum-secure blockchain infrastructure, dedicated enterprise protocols, and advanced decentralized security solutions for institutional clients
+</p>
               </div>
               
               <Link to="/enterprise">
                 <button className="whitespace-nowrap flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-teal-500 to-blue-600 
                   rounded-lg text-white font-medium hover:from-teal-400 hover:to-blue-500 
                   transition-all duration-300 shadow-lg shadow-blue-900/30">
-                  Contact Sales
+                  Contact Support
                   <ExternalLink size={16} />
                 </button>
               </Link>

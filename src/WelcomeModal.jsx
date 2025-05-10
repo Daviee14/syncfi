@@ -127,7 +127,7 @@ const WelcomeModal = () => {
             
             {/* Title */}
             <h2 className="text-2xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">
-              Welcome to Syncfi
+              Welcome to SyncFi
             </h2>
             
             {/* Description */}
@@ -146,7 +146,7 @@ const WelcomeModal = () => {
             </button>
             
             {/* Metrics */}
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-col-2 md:grid-cols-3 gap-3">
               <div className="bg-slate-900/50 backdrop-blur-md p-3 rounded-lg border border-slate-700 hover:border-teal-500/30 transition-all duration-300">
                 <p className="text-lg font-bold text-white">
                   200k+<span className="text-teal-400 text-sm ml-1">TPS</span>
